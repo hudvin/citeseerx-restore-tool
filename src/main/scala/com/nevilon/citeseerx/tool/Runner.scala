@@ -25,6 +25,8 @@ object Runner {
   }
 
   def parse() {
+    implicit def buf2Str(buff:mutable.StringBuilder): String = buff.toString
+
     val filename = "/tmp/ddd/oai_dc1.dump"
     val reader = new XMLEventReader(io.Source.fromFile(new File(filename)))
     val buffer: StringBuilder = new StringBuilder
@@ -43,6 +45,7 @@ object Runner {
             case List("record") => {
               currentRecord = new Record
               records += currentRecord
+              println(records.size)
             }
             case _ => {
             }
@@ -54,44 +57,44 @@ object Runner {
             case List("dc", "metadata", "record") => {
               currentFieldName match {
                 case "relation" => {
-                  currentRecord.metadata.dc.relations += buffer.toString()
+                  currentRecord.metadata.dc.relations += buffer
                 }
 
                 case "title" => {
-                  currentRecord.metadata.dc.title = buffer.toString()
+                  currentRecord.metadata.dc.title = buffer
                 }
                 case "creator" => {
-                  currentRecord.metadata.dc.creator = buffer.toString()
+                  currentRecord.metadata.dc.creator = buffer
                 }
                 case "subject" => {
-                  currentRecord.metadata.dc.subject = buffer.toString()
+                  currentRecord.metadata.dc.subject = buffer
                 }
                 case "description" => {
-                  currentRecord.metadata.dc.description = buffer.toString()
+                  currentRecord.metadata.dc.description = buffer
                 }
                 case "contributor" => {
-                  currentRecord.metadata.dc.contributor = buffer.toString()
+                  currentRecord.metadata.dc.contributor = buffer
                 }
                 case "publisher" => {
-                  currentRecord.metadata.dc.publisher = buffer.toString()
+                  currentRecord.metadata.dc.publisher = buffer
                 }
                 case "date" => {
-                  currentRecord.metadata.dc.date = buffer.toString()
+                  currentRecord.metadata.dc.date = buffer
                 }
                 case "format" => {
-                  currentRecord.metadata.dc.format = buffer.toString()
+                  currentRecord.metadata.dc.format = buffer
                 }
                 case "identifier" => {
-                  currentRecord.metadata.dc.identifier = buffer.toString()
+                  currentRecord.metadata.dc.identifier = buffer
                 }
                 case "source" => {
-                  currentRecord.metadata.dc.source = buffer.toString()
+                  currentRecord.metadata.dc.source = buffer
                 }
                 case "language" => {
-                  currentRecord.metadata.dc.language = buffer.toString()
+                  currentRecord.metadata.dc.language = buffer
                 }
                 case "rights" => {
-                  currentRecord.metadata.dc.rights = buffer.toString()
+                  currentRecord.metadata.dc.rights = buffer
                 }
                 case _ => {
                 }
@@ -101,13 +104,13 @@ object Runner {
             case List("header", "record") => {
               currentFieldName match {
                 case "identifier" => {
-                  currentRecord.header.identifier = buffer.toString()
+                  currentRecord.header.identifier = buffer
                 }
                 case "datestamp" => {
-                  currentRecord.header.datestamp = buffer.toString()
+                  currentRecord.header.datestamp = buffer
                 }
                 case "setSpec" => {
-                  currentRecord.header.setSpec = buffer.toString()
+                  currentRecord.header.setSpec = buffer
                 }
               }
 
