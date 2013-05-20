@@ -1,20 +1,7 @@
 package com.nevilon.citeseerx.tool
 
-;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List
 import java.lang.String
 import scala.collection.mutable.ListBuffer
-;
-
-/**
- * Book class stores book information, after parsing the xml
- *
- * @author Ganesh Tiwari
- */
-
 
 class Record {
 
