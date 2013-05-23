@@ -51,73 +51,12 @@ object Controller {
     val KEEP_ALIVE_TIME: Long = 0L
     val blockingQueue: LinkedBlockingQueue[Runnable] = new LinkedBlockingQueue[Runnable](QUEUE_SIZE)
 
-
     val executor: DownloadThreadPoolExecutor = new DownloadThreadPoolExecutor(
       POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME, TimeUnit.MILLISECONDS, blockingQueue)
 
     executor.prestartAllCoreThreads()
 
-
-
-
-        var counter = 0;
-    //
-    //
-    //    val it = mongoRecordSaver.getRecord()
-    //    it.foreach(dbObj => {
-    //      val source = dbObj.get("metadata").asInstanceOf[BasicDBObject].
-    //        get("dc").asInstanceOf[BasicDBObject]
-    //        .get("source").asInstanceOf[String]
-    //
-    //      //  println(source)
-    //
-    //      val worker = new Thread() {
-    //
-    //
-    //        setUncaughtExceptionHandler(new UncaughtExceptionHandler {
-    //          def uncaughtException(t: Thread, e: Throwable) {
-    //            println("oops")
-    //          }
-    //        })
-    //
-    //        override def run() {
-    //          if (source == null) {
-    //            setName("null")
-    //          }
-    //          else setName(source)
-    //          val httpClient = new DefaultHttpClient(cm)
-    //
-    //          httpClient.getConnectionManager.closeExpiredConnections()
-    //          httpClient.getParams.setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10000)
-    //
-    //          //              HttpClientFactory.buildHttpClient(POOL_SIZE, POOL_SIZE, "nemo")
-    //
-    //          val fetcher = new Fetcher(source, httpClient) {
-    //            def onException(ex: Exception) {}
-    //
-    //            def onHttpError(httError: Int) {
-    //              println("error " + httError)
-    //            }
-    //
-    //            def onDataStream(entityParams: EntityParams, httpEntity: HttpEntity, url: String) {
-    //              mongoStorage.saveStream(httpEntity.getContent, url, entityParams.mimeType.toString, "")
-    //              println(counter)
-    //              counter += 1
-    //
-    //            }
-    //          }
-    //          fetcher.load()
-    //          //httpClient.getConnectionManager.shutdown()
-    //        }
-    //      }
-    //
-    //      println("put ")
-    //      executor.purge()
-    //      blockingQueue.put(worker)
-    //
-    //    })
-    //    println("end!!!!!!!!")
-
+    var counter = 0;
     val t = new Thread() {
 
       override def run() {
@@ -126,11 +65,8 @@ object Controller {
           val source = dbObj.get("metadata").asInstanceOf[BasicDBObject].
             get("dc").asInstanceOf[BasicDBObject]
             .get("source").asInstanceOf[String]
-
           //  println(source)
-
           val worker = new Thread() {
-
 
             setUncaughtExceptionHandler(new UncaughtExceptionHandler {
               def uncaughtException(t: Thread, e: Throwable) {
@@ -156,11 +92,9 @@ object Controller {
                   mongoStorage.saveStream(is, entityParams.url, entityParams.mimeType.toString, "")
                   println(counter)
                   counter += 1
-
                 }
               }
               fetcher.load()
-              //httpClient.getConnectionManager.shutdown()
             }
           }
 
@@ -176,7 +110,6 @@ object Controller {
 
     t.start()
     // executor.shutdown()
-
-  }
+    }
 
 }

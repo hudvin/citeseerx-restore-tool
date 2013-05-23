@@ -3,12 +3,7 @@ package com.nevilon.citeseerx.tool
 
 import javax.activation.MimeType
 import scala.Unit
-import org.eclipse.jetty.client.HttpClient
 import java.io.{IOException, FileNotFoundException, InputStream}
-import org.eclipse.jetty.client.util.InputStreamResponseListener
-import java.util.concurrent.TimeUnit
-import org.apache.commons.io.IOUtils
-import org.eclipse.jetty.http.HttpHeader
 import java.net.{ConnectException, UnknownHostException, URL}
 
 
@@ -28,7 +23,6 @@ abstract class Fetcher(url: String) {
     entityParams
   }
 
-
   def load() {
     try {
       val encodedUrl = url
@@ -41,7 +35,7 @@ abstract class Fetcher(url: String) {
         val contentType = connection.getContentType
         val contentStream = connection.getInputStream
         val entityParams = buildEntityParams(contentType, url, contentLength)
-      //  onDataStream(entityParams, contentStream)
+        //  onDataStream(entityParams, contentStream)
         contentStream.close()
       }
       catch {
@@ -59,76 +53,10 @@ abstract class Fetcher(url: String) {
         case e: IOException => {
           print(e.getMessage)
         }
-        case e:Throwable=>{
+        case e: Throwable => {
           println(e.getMessage)
         }
       }
-
-
-      //      val client = new HttpClient()
-      //      client.start()
-      //      val listener = new InputStreamResponseListener()
-      //      client.newRequest(encodedUrl).send(listener)
-      //      val response = listener.get(5, TimeUnit.SECONDS)
-      //      if (response.getStatus() == 200) {
-      //        val stream = listener.getInputStream()
-      //        val contentType = response.getHeaders.getField(HttpHeader.CONTENT_TYPE).getValue
-      //        onDataStream(buildEntityParams(contentType, url, response.getHeaders.getField(HttpHeader.CONTENT_LENGTH).getLongValue),
-      //          stream)
-      //        stream.close()
-      //      } else {
-      //        onHttpError(response.getStatus)
-      //      }
-
-
-      //      val httpGet = new HttpGet(encodedUrl)
-      //      httpGet.setHeader("Connection", "close");
-      //
-      //      //
-      //
-      //
-      //      var response: HttpResponse = null
-      //      try {
-      //        response = httpClient.execute(httpGet, new BasicHttpContext()) //what is context?
-      //        val statusCode = response.getStatusLine.getStatusCode
-      //        if (statusCode == HttpStatus.SC_OK) {
-      //          val entity = response.getEntity
-      //          val entityParams = buildEntityParams(entity, url)
-      //          EntityUtils.consume(entity)
-      //          entity.getContent.close()
-      //          //onDataStream(entityParams, entity, url)
-      //        } else {
-      //          onHttpError(statusCode)
-      //        }
-      //      } catch {
-      //        case e: Exception => {
-      //          // httpGet.abort()
-      //          httpGet.releaseConnection()
-      //          onException(e)
-      //        }
-      //      }
-      //      finally {
-      //        if (response != null) {
-      //          //        assert(response != null)
-      //          //        assert(response.getEntity != null)
-      //          //        assert(response.getEntity.getContent != null)
-      //          //        response.getEntity.getContent.close()
-      //        }
-      //
-      //
-      //        //  httpGet.abort()
-      //        httpGet.releaseConnection()
-      //
-      //      }
-      //
-      //
-      //    } catch {
-      //      case t: Throwable => {
-      //        println("-------")
-      //        // t.printStackTrace()
-      //      }
-      //    }
-
     }
   }
 
