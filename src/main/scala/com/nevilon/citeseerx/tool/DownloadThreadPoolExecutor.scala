@@ -8,11 +8,11 @@ class DownloadThreadPoolExecutor(corePoolSize: Int, maximumPoolSize: Int, keepAl
 
   protected override def beforeExecute(t: Thread, r: Runnable) {
     super.beforeExecute(t, r)
-    println("before")
+   // println("before")
   }
 
   protected override def afterExecute(r: Runnable, t: Throwable) {
     super.afterExecute(r, t)
-    println("after")
+   // println("after")
   }
 }
