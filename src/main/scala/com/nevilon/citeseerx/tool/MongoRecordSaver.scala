@@ -20,23 +20,15 @@ class DynamicMongoDBObject(dbObject: DBObject) extends Dynamic {
     }
   }
 
-  override def toString = {
-    if (dbObject != null) dbObject.toString else ""
-  }
-
+  override def toString = if (dbObject != null) dbObject.toString else ""
 }
 
 
 class StringDynamicMongoDBObject(value: String) extends DynamicMongoDBObject(null) {
 
-  override def selectDynamic(fieldName: String): DynamicMongoDBObject = {
-    throw new RuntimeException
-  }
+  override def selectDynamic(fieldName: String): DynamicMongoDBObject = throw new RuntimeException
 
-
-  override def toString = {
-    value
-  }
+  override def toString = value
 
 }
 
@@ -68,11 +60,10 @@ object Transformer {
     record.metadata.dc.subject = dyn.metadata.dc.subject
     record.metadata.dc.title = dyn.metadata.dc.title
 
-    val statusObj = dbObject.get("status").asInstanceOf[DBObject]
+    //val statusObj = dbObject.get("status").asInstanceOf[DBObject]
     val idObj = dbObject.get("gfsId")
     if (idObj != null) {
       record.status.gfsId = idObj.asInstanceOf[ObjectId].toString
-
     }
 
     record.status.httpStatus = dyn.status.httpStatus
@@ -123,24 +114,6 @@ object Transformer {
 
 class MongoRecordSaver(collection: MongoCollection) {
 
-  def updateStatus() {
-
-  }
-
-
-  //  def getRecord() {
-  //    val dbObj = collection.find({})
-  //    val record = new Record
-  //    record.header.identifier = dbObj.g
-  //    "datestamp" -> record.header.datestamp,
-  //    "setSpec" -> record.header.setSpec
-  //
-  //    record.header.datestamp
-  //
-  //
-  //  }
-
-
   def saveRecord(record: Record) {
     collection.save(Transformer.object2db(record))
   }
@@ -150,7 +123,6 @@ class MongoRecordSaver(collection: MongoCollection) {
     collection.update(MongoDBObject("_id" -> new ObjectId(record.id)), Transformer.object2db(record))
   }
 
-  // db.meta.find({},{'metadata.dc.source':1});
   def getRecords(): MongoCursor = {
     collection.find(MongoDBObject("status.isProcessed" -> "false"))
   }
