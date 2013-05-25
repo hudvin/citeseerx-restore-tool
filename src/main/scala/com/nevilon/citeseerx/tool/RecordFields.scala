@@ -5,8 +5,18 @@ import scala.collection.mutable.ListBuffer
 
 class Record {
 
+  var id: String = _
   var header: Header = new Header
   var metadata = new Metadata
+  var status = new Status
+
+}
+
+class Status {
+
+  var isProcessed = false
+  var gfsId: String = _
+  var httpStatus: String = _
 
 }
 
@@ -39,7 +49,7 @@ class Dc {
   var source: String = _
   var language: String = _
   var rights: String = _
-  var relations:ListBuffer[String] = new ListBuffer[String]
+  var relations = new ListBuffer[String]
 
 
 }
