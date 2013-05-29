@@ -1,12 +1,12 @@
 citeseerx-restore-tool
 ======================
 
-#### tool to parse citeseerx metadata dump, download papers and save to db
+#### tool to parse citeseerx metadata dump, download papers and save to database
 
 ### What is this?
 This tool allows:
 
-1. Parse citeseerx metadata dump and import it into mongodb databsse. Metadata contains such info as title, authors, descritions, links to another papers, link to paper and so on.
+1. Parse citeseerx metadata dump and import it into mongodb database. Metadata contains such info as title, authors, descriptions, links to another papers, link to paper and so on.
 2. Download papers from links extracted from metadata. There about 700000 linked papers, but some of them are missing.
 
 ### Prerequisite
